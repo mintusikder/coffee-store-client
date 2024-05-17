@@ -1,19 +1,39 @@
 const Addcoffee = () => {
-  const handelAddCoffee = e =>{
-    e.preventDefault()
-    const form = event.target 
-    const name = form.name.value
-    const quantity = form.quantity.value
-    const supplier = form.supplier.value
-    const taste = form.taste.value
-    const details = form.details.value
-    const category = form.category.value
-    const photo = form.photo.value
+  const handelAddCoffee = (e) => {
+    e.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const quantity = form.quantity.value;
+    const supplier = form.supplier.value;
+    const taste = form.taste.value;
+    const details = form.details.value;
+    const category = form.category.value;
+    const photo = form.photo.value;
 
-    const newCoffee = {name,quantity,supplier,taste,details,category,photo}
-    console.log(newCoffee)
+    const newCoffee = {
+      name,
+      quantity,
+      supplier,
+      taste,
+      details,
+      category,
+      photo,
+    };
+    console.log(newCoffee);
+    // send data to the server
 
-  }
+    fetch("http://localhost:5000/coffee", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCoffee),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
   return (
     <div className="bg-[#F4F3F0] p-24">
       <h2 className="text-3xl font-bold">Add Coffee</h2>
@@ -118,8 +138,12 @@ const Addcoffee = () => {
             />
           </label>
         </div>
-      
-        <input type="submit" value="Add Coffee" className="btn btn-active btn-ghost w-full mt-8" />
+
+        <input
+          type="submit"
+          value="Add Coffee"
+          className="btn btn-active btn-ghost w-full mt-8"
+        />
       </form>
     </div>
   );
